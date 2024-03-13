@@ -88,7 +88,7 @@ def single_image_loader(input_path: str) -> np.array:
     pix_arr = ds.pixel_array
     pix_arr = [cv2.resize(slice_data, (output_width, output_height)) for slice_data in pix_arr]    
     np_img = np.array(pix_arr)
-    np_img = np.transpose(np_img, (1, 2, 0))
+    #np_img = np.transpose(np_img, (1, 2, 0))
     return np_img
 
 
@@ -116,5 +116,17 @@ for index, row in test.iterrows():
 
     image_data = single_image_loader(path)
 
-    file_path = os.path.join(processed_path, f"record{index}.tfrecords")
-    convert_to_record(image_data, label, file_path) 
+    depth = image_data.shape[0]
+
+    for i in range(depth):
+        single_image = image_data[i]
+        single_image = np.expand_dims(single_image, axis=-1)
+        file_path = os.path.join(processed_path, f"record{index}_i{i}.tfrecords")
+        convert_to_record(single_image, label, file_path) 
+
+
+    
+    #print(image_data.shape)
+
+    #file_path = os.path.join(processed_path, f"record{index}.tfrecords")
+    #convert_to_record(image_data, label, file_path) 
