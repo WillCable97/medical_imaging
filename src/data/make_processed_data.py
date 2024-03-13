@@ -10,7 +10,7 @@ data_path = os.path.join(root_dir, "data")
 interim_data_path = os.path.join(data_path, "interim")
 processed_path = os.path.join(data_path, "processed")
 
-MINDEPTH = 38
+MINDEPTH = 24
 
 
 #fEATURE DEFINITIONS
