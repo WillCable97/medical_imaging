@@ -34,14 +34,6 @@ def get_label_info(file_path: str) -> pd.DataFrame:
 label_info = get_label_info(label_file)
 
 
-#fEATURE DEFINITIONS
-def _int64_feature(value):
-  return tf.train.Feature(int64_list=tf.train.Int64List(value=[value]))
-
-def _bytes_feature(value):
-  return tf.train.Feature(bytes_list=tf.train.BytesList(value=[value]))
-
-
 def extract_file_meta_data(raw_path: str, file_name: str):
     dframe = pd.read_csv(os.path.join(raw_path, file_name))
     meta_data = dframe[["Subject ID", "Study Date", "File Location"]]
