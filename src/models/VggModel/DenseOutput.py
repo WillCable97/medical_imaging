@@ -2,6 +2,7 @@ import keras
 
 class DenseOutput(keras.layers.Layer):
     def __init__(self, output_classes:int):
+        super().__init__()
         self.flatten_layer = keras.layers.Flatten()
         self.dense_1 = keras.layers.Dense(4096, activation='relu')
         self.dense_2 = keras.layers.Dense(4096, activation='relu')
