@@ -2,6 +2,7 @@ from src.data.DataLoaders.tf_record_loader import get_all_files #loader
 from src.data.DataObjs.StdSingleImageSet import StdSingleImageSet
 from src.models.Callbacks.CheckpointCallback import checkpoint_callback
 from src.models.Callbacks.CsvCallback import csv_callback
+from src.models.Callbacks.PrecisionCallback import PrecisionCallback
 from src.models.VggModel.Vgg16 import Vgg16
 import sys
 import os 
@@ -22,14 +23,12 @@ print(final_data)
 
 model = Vgg16(4)
 
-
 model.compile("adam", keras.losses.SparseCategoricalCrossentropy())
-
 
 
 my_csv_callback = csv_callback(root_dir, model_name)
 my_checkpoint_callback = checkpoint_callback(root_dir, model_name,5)
+prec_callback = PrecisionCallback(final_data)
 
 
-
-model.fit(final_data, epochs=10)
+model.fit(final_data, epochs=10, validation_data=final_data, callbacks=prec_callback)
