@@ -13,12 +13,9 @@ data_path = os.path.join(root_dir, "data")
 raw_data_path = os.path.join(data_path, "raw")
 processed_path = os.path.join(data_path, "interim")
 
-#Label file
-label_file = os.path.join(raw_data_path, "labels.csv")
-d_frame = pd.read_csv(label_file)
-d_frame["label"] = (d_frame["Normal"] + (2* d_frame["Cancer"]) 
-                    + (3* d_frame["Actionable"]) + (4* d_frame["Benign"])) - 1
 
+#GET LABEL DATA
+label_file = os.path.join(raw_data_path, "labels.csv")
 
 def get_label_info(file_path: str) -> pd.DataFrame:
     d_frame = pd.read_csv(file_path)
@@ -30,8 +27,13 @@ def get_label_info(file_path: str) -> pd.DataFrame:
 
     return ret_df
 
-
 label_info = get_label_info(label_file)
+
+
+
+
+
+
 
 
 def extract_file_meta_data(raw_path: str, file_name: str):
@@ -87,7 +89,9 @@ def single_image_loader(input_path: str) -> np.array:
 
 min_depth =100
 
+
 for index, row in test.iterrows():
+
     path = row["file_path"]
     label = row["label"]
     save_list = []

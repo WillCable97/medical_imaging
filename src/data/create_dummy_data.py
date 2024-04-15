@@ -8,7 +8,7 @@ root_dir = "./"
 root_dir = os.path.abspath(root_dir)
 data_path = os.path.join(root_dir, "data")
 interim_data_path = os.path.join(data_path, "interim")
-processed_path = os.path.join(data_path, "processed", "FullSet")
+processed_path = os.path.join(data_path, "processed", "TestSet1")
 
 MINDEPTH = 25
 
@@ -36,7 +36,17 @@ def convert_to_record(image_data, label, file_name):
     
     writer.write(example.SerializeToString())
 
+
+things_to_see = {}
+
+
+
+negative_count = 0
+positive_count = 0
+
+
 for i, file_found in enumerate(os.listdir(interim_data_path)):
+    print(i)
     if file_found == '.gitkeep': continue
     file_path = os.path.join(interim_data_path, file_found)
 
@@ -55,6 +65,25 @@ for i, file_found in enumerate(os.listdir(interim_data_path)):
     img_data = img_data[::skips][:MINDEPTH]
     img_data = img_data.transpose(1, 2, 0)
 
-    file_path = os.path.join(processed_path, f"record{i}.tfrecords")
+    if not label in things_to_see:
+       things_to_see[label] = 0 
+    else:
+       things_to_see[label] += 1
 
-    convert_to_record(img_data, label, file_path)
+
+
+    #if (label ==0 and negative_count < 243) or label ==1:
+    #  file_path = os.path.join(processed_path, f"record{i}.tfrecords")
+    #  convert_to_record(img_data, label, file_path) 
+    #  if label ==0 : negative_count += 1 
+
+       
+       
+    #file_path = os.path.join(processed_path, f"record{i}.tfrecords")
+
+    #convert_to_record(img_data, label, file_path)  
+print(things_to_see)
+
+
+
+#{0: 1355, 2: 243, 1: 59, 3: 60}
